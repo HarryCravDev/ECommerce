@@ -5,8 +5,6 @@ import Rating from "../Components/Rating";
 import axios from "axios";
 
 const ProductScreen = ({ match }) => {
-  // const product = products.find((p) => p._id === match.params.id);
-
   const [product, setProduct] = useState({});
 
   useEffect(() => {
@@ -17,7 +15,7 @@ const ProductScreen = ({ match }) => {
     };
 
     fetchProduct();
-  }, []);
+  }, [match]);
 
   return (
     <>
