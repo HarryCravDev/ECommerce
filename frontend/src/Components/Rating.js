@@ -13,8 +13,7 @@ const Rating = ({ value, text, color }) => {
               : value >= 0.5
               ? "fas fa-star-half-alt"
               : "far fa-star"
-          }
-        ></i>
+          }></i>
       </span>
 
       <span>
@@ -26,8 +25,7 @@ const Rating = ({ value, text, color }) => {
               : value >= 1.5
               ? "fas fa-star-half-alt"
               : "far fa-star"
-          }
-        ></i>
+          }></i>
       </span>
 
       <span>
@@ -39,8 +37,7 @@ const Rating = ({ value, text, color }) => {
               : value >= 2.5
               ? "fas fa-star-half-alt"
               : "far fa-star"
-          }
-        ></i>
+          }></i>
       </span>
 
       <span>
@@ -52,8 +49,7 @@ const Rating = ({ value, text, color }) => {
               : value >= 3.5
               ? "fas fa-star-half-alt"
               : "far fa-star"
-          }
-        ></i>
+          }></i>
       </span>
 
       <span>
@@ -65,8 +61,7 @@ const Rating = ({ value, text, color }) => {
               : value >= 4.5
               ? "fas fa-star-half-alt"
               : "far fa-star"
-          }
-        ></i>
+          }></i>
       </span>
 
       <span>{text && text}</span>
@@ -76,6 +71,7 @@ const Rating = ({ value, text, color }) => {
 
 Rating.defaultProps = {
   color: "#f8e825",
+  value: 0,
 };
 
 Rating.propTypes = {
