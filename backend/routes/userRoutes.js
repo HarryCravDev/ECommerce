@@ -4,11 +4,12 @@ const {
   userAuth,
   getUserProfile,
   registerUser,
+  updateUserProfile
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").post(registerUser);
 router.route("/login").post(userAuth);
-router.route("/profile").get(protect, getUserProfile);
+router.route("/profile").get(protect, getUserProfile).put(protect, updateUserProfile);
 
 module.exports = router;
