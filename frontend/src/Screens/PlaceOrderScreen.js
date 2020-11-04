@@ -9,6 +9,11 @@ import Message from '../Components/Message'
 const PlaceOrderScreen = () => {
     const cart = useSelector(state => state.cart)
 
+    // Calculate Prices
+    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
+    cart.shippingPrice = cart.itemsPrice > 75 ? 0 : 10;
+    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice)).toFixed(2); 
+
     const placeOrderHandler = () => {
         console.log('Place Order Button Working!');
     }
@@ -72,19 +77,19 @@ const PlaceOrderScreen = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>£{'Money Value Here'}</Col>
+                                    <Col>£{cart.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>£{'Shipping Value Here'}</Col>
+                                    <Col>£{cart.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>£{'Total Price Value Here'}</Col>
+                                    <Col>£{cart.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
