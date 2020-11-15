@@ -11,12 +11,13 @@ const PlaceOrderScreen = ({history}) => {
     const dispatch = useDispatch();
 
     // Calculate Prices
-    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
-    cart.shippingPrice = cart.itemsPrice > 75 ? 0 : 10;
+    cart.itemsPrice = Number(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)).toFixed(2);
+    cart.shippingPrice = (Number(cart.itemsPrice) > 75 ? 0 : 10).toFixed(2);
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice)).toFixed(2); 
 
     const orderCreate = useSelector(state => state.orderCreate);
     const { order, success, error } = orderCreate;
+
 
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const PlaceOrderScreen = ({history}) => {
             shippingAddress: cart.shippingAddress,
             itemsPrice: cart.itemsPrice,
             shippingPrice: cart.shippingPrice,
-            totalPrice: cart.totalPrice
+            totalPrice: cart.totalPrice,
         }));
     }
 
@@ -55,7 +56,7 @@ const PlaceOrderScreen = ({history}) => {
                         <ListGroup.Item>
                             <h2>Payment Method</h2>
                             <strong>Method: </strong>
-                            {cart.paymentMethod}
+                            Paypal or Credit Card
                         </ListGroup.Item>
 
                         <ListGroup.Item>
@@ -75,7 +76,7 @@ const PlaceOrderScreen = ({history}) => {
                                                         </Link>
                                                     </Col>
                                                     <Col md={4}>
-                                                        {item.qty} x {item.price} = £{item.qty * item.price}
+                                                        {item.qty} x {item.price} = £{Number(item.qty * item.price).toFixed(2)}
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>
