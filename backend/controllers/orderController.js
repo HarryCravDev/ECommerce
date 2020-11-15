@@ -19,7 +19,6 @@ exports.orderProducts = asyncHandler(async (req, res) => {
     throw new Error('No order items.');
     return
   } else {
-    console.log(orderItems);
     const order = new Order({
         orderItems,
         user: req.connection._httpMessage.user._id,
@@ -29,12 +28,24 @@ exports.orderProducts = asyncHandler(async (req, res) => {
         totalPrice
     })
 
-    console.log(orderItems);
-
     const createdOrder = await order.save();
-
-
-
+    
     res.status(201).json(createdOrder);
+  }
+});
+
+//  @desc   Get order by ID
+//  @route  GET /api/orders/:id
+//  @access Private
+exports.getOrderById = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate('user', 'name email');
+
+  console.log('Working!! - ', order);
+
+  if(order){
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not found.');
   }
 });
