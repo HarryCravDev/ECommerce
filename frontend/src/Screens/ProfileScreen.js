@@ -26,7 +26,7 @@ const ProfileScreen = ({ location, history }) => {
   const { success } = userUpdateProfile;
 
   const orderListMy = useSelector((state) => state.orderMyList);
-  console.log(orderListMy);
+  // eslint-disable-next-line
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
@@ -35,11 +35,11 @@ const ProfileScreen = ({ location, history }) => {
     } else {
       if (!user.name) {
         dispatch(getUserDetails("profile"));
-        dispatch(listMyOrders());
+        dispatch(listMyOrders(userInfo._id));
       } else {
         setName(userInfo.name);
         setEmail(userInfo.email);
-        dispatch(listMyOrders());
+        dispatch(listMyOrders(userInfo._id));
       }
     }
   }, [dispatch, history, userInfo, user]);
