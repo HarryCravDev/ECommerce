@@ -29,3 +29,14 @@ exports.protect = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorised, no token.");
   }
 });
+
+exports.isAdmin = (req, res, next) => {
+  const { isAdmin } = req.res.user;
+
+  if (req.res.user && isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorised as an admin.");
+  }
+};
