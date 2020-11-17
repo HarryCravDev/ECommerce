@@ -77,6 +77,13 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+//  @desc   Get users profile
+//  @route  GET /api/users
+//  @access Private
+exports.getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
+});
 
 //  @desc   Update user profile
 //  @route  PUT /api/users/profile
@@ -84,10 +91,10 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
 exports.updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(res.user._id);
 
-  if(user){
+  if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    if(req.body.password){
+    if (req.body.password) {
       user.password = req.body.password;
     }
 
@@ -105,5 +112,3 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found.");
   }
 });
-
-
