@@ -122,7 +122,7 @@ export const payOrder = (orderId, paymentResult) => async (
   }
 };
 
-export const listMyOrders = () => async (dispatch, getState) => {
+export const listMyOrders = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_LIST_MY_REQUEST,
@@ -135,7 +135,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
-        _id: "5f86e970699af0442c4c9dff",
+        _id: `${id}`,
       },
     };
 
