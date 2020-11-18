@@ -6,6 +6,9 @@ const {
   registerUser,
   updateUserProfile,
   getUsers,
+  deleteUser,
+  updateUser,
+  getUser,
 } = require("../controllers/userController");
 const { protect, isAdmin } = require("../middleware/authMiddleware");
 
@@ -15,5 +18,10 @@ router
   .route("/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
+router
+  .route("/:id")
+  .delete(protect, isAdmin, deleteUser)
+  .get(protect, isAdmin, getUser)
+  .put(protect, isAdmin, updateUser);
 
 module.exports = router;
