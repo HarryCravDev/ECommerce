@@ -35,7 +35,6 @@ const UserListScreen = ({ history }) => {
   }, [dispatch, userInfo, history, successDelete]);
 
   const deleteHandler = () => {
-    console.log(`DELETE USER: ${userId}`);
     dispatch(deleteUser(userId));
     setUserId("");
     handleClose();
