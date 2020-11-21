@@ -4,7 +4,12 @@ import { Table, Button, Modal, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../Components/Message";
 import Loader from "../Components/Loader";
-import { listProducts, deleteProduct } from "../actions/productActions";
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from "../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -30,13 +35,36 @@ const ProductListScreen = ({ history, match }) => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    product: createdProduct,
+    success: successCreate,
+  } = productCreate;
+
+  console.log(createdProduct);
+
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo.isAdmin) {
       history.push("/login");
     }
-  }, [dispatch, userInfo, history, successDelete]);
+
+    if (successCreate) {
+      history.push(`/admin/products/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    userInfo,
+    history,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = () => {
     dispatch(deleteProduct(productId));
@@ -44,8 +72,9 @@ const ProductListScreen = ({ history, match }) => {
     handleClose();
   };
 
-  const createProductHandler = (product) => {
+  const createProductHandler = () => {
     // Create Product
+    dispatch(createProduct());
   };
 
   // Test Modal Code
@@ -68,6 +97,8 @@ const ProductListScreen = ({ history, match }) => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -103,9 +134,9 @@ const ProductListScreen = ({ history, match }) => {
                   >
                     <i className="fas fa-trash"></i>
                   </Button>
-                  <LinkContainer to={`/admin/user/${product._id}/edit`}>
+                  <LinkContainer to={`/admin/products/${product._id}/edit`}>
                     <Button variant="light" className="btn-sm">
-                      Edit User
+                      Edit
                     </Button>
                   </LinkContainer>
                 </td>
