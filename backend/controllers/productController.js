@@ -42,10 +42,10 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
 //  @route  POST  /api/products/:id
 //  @access Private/Admin
 exports.createProduct = asyncHandler(async (req, res) => {
-  const product = new Product.create({
+  const product = new Product({
     name: "Same Name",
     price: 50,
-    user: req.user._id,
+    user: req.res.user._id,
     image: "/images/sample.jpg",
     brand: "Sample Brand",
     category: "Sample Category",
