@@ -82,3 +82,12 @@ exports.getMyOrders = asyncHandler(async (req, res) => {
   const order = await Order.find({ user: req.headers._id });
   res.json(order);
 });
+
+//  @desc   Get all orders
+//  @route  GET /api/orders/
+//  @access Private/Admin
+exports.getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("_id user");
+  console.log(orders);
+  res.json(orders);
+});
